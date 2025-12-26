@@ -24,6 +24,20 @@ AI-powered journaling app built with **Expo (React Native)**, **Sanity CMS**, **
 - **Streak tracking**: compute current/longest streak + milestone messaging.
 - **Auth + billing**: Clerk sign-in/sign-up and plan gating (`Protect plan="pro"`).
 
+## Screenshots
+
+| Home | AI Chat |
+| --- | --- |
+| ![Home screen](docs/screenshots/home.png) | ![AI chat screen](docs/screenshots/ai-chat.png) |
+
+| Entries | Profile |
+| --- | --- |
+| ![Entries list screen](docs/screenshots/entries.png) | ![Profile screen](docs/screenshots/profile.png) |
+
+| Pricing (web) |
+| --- |
+| ![Pricing screen](docs/screenshots/pricing.png) |
+
 ## Repo structure
 
 - **Expo app**: `app/` (Expo Router)
