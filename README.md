@@ -1,50 +1,172 @@
-# Welcome to your Expo app 👋
+# AI-Powered Journal App (Expo + Sanity + Clerk + OpenAI)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+[![Expo SDK 54](https://img.shields.io/badge/Expo-SDK%2054-000020?logo=expo)](https://expo.dev/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.81-61DAFB?logo=react)](https://reactnative.dev/)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Sanity](https://img.shields.io/badge/Sanity-CMS-F03E2F?logo=sanity)](https://www.sanity.io/)
+[![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?logo=clerk)](https://clerk.com/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?logo=openai)](https://openai.com/)
+[![Tamagui](https://img.shields.io/badge/Tamagui-UI-000000)](https://tamagui.dev/)
+[![Zod](https://img.shields.io/badge/Zod-Validation-3E67B1)](https://zod.dev/)
 
-## Get started
+AI-powered journaling app built with **Expo (React Native)**, **Sanity CMS**, **Clerk authentication + billing**, **Tamagui**, and **OpenAI**.
 
-1. Install dependencies
+- **Mobile-first**: iOS/Android is the primary experience.
+- **Web is used for billing**: subscription management via Clerk’s web components (e.g. `/pricing`, `/plan-changed-success`).
 
-   ```bash
-   npm install
-   ```
+> Built while following a tutorial, then customized for this repo. This README reflects **this codebase**, not the tutorial template.
 
-2. Start the app
+## Features
 
-   ```bash
-   npx expo start
-   ```
+- **Journal entries**: title (optional), mood tracking, rich content, image attachments.
+- **Daily prompts**: swipeable prompt cards with “refresh” and “start entry” flows.
+- **AI chat**: therapeutic-style chat that can fetch and reference your journal history.
+- **Auto-categorization**: AI suggests an existing category or creates a new one.
+- **Streak tracking**: compute current/longest streak + milestone messaging.
+- **Auth + billing**: Clerk sign-in/sign-up and plan gating (`Protect plan="pro"`).
 
-In the output, you'll find options to open the app in a
+## Repo structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Expo app**: `app/` (Expo Router)
+- **Sanity Studio**: `sanity/`
+- **Sanity client + queries**: `lib/sanity/`
+- **Shared utilities**: `lib/utils/`
+- **Sample import data**: `sample_data/`
+- **Developer guides**: `help/`
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Getting started
 
-## Get a fresh project
+### Prerequisites
 
-When you're ready, run:
+- Node.js 18+
+- npm
+- iOS Simulator (macOS + Xcode) and/or Android Emulator (Android Studio)
+- Accounts:
+  - Clerk (auth + billing)
+  - Sanity (CMS)
+  - OpenAI (AI chat/categorization)
+
+### Install dependencies
+
+Install dependencies for **both** the Expo app and the Sanity Studio:
 
 ```bash
-npm run reset-project
+# Expo app
+npm install
+
+# Sanity Studio
+cd sanity
+npm install
+cd ..
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Environment variables
 
-## Learn more
+This project uses **two env files**:
 
-To learn more about developing your project with Expo, look at the following resources:
+### 1) Expo app: `.env` (project root)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Create `.env` at the project root:
 
-## Join the community
+```env
+# Clerk (recommended)
+# NOTE: This repo currently initializes <ClerkProvider> in app/_layout.tsx.
+# If you add publishableKey there, use this var:
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 
-Join our community of developers creating universal apps.
+# Sanity (used by lib/sanity/client.ts)
+EXPO_PUBLIC_SANITY_PROJECT_ID=yourProjectId
+EXPO_PUBLIC_SANITY_DATASET=production
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# WARNING: This token is currently referenced from client-side code.
+# Prefer moving writes behind API routes if you plan to ship publicly.
+EXPO_PUBLIC_SANITY_TOKEN=yourSanityWriteToken
+
+# OpenAI (used server-side by Expo API routes in app/api/*)
+OPENAI_API_KEY=sk-...
+```
+
+### 2) Sanity Studio: `sanity/.env.local`
+
+Create `sanity/.env.local`:
+
+```env
+SANITY_STUDIO_SANITY_PROJECT_ID=yourProjectId
+SANITY_STUDIO_SANITY_DATASET=production
+
+# Optional if you need authenticated Studio operations
+SANITY_STUDIO_SANITY_TOKEN=yourSanityToken
+```
+
+## Running locally
+
+### 1) Start the Expo app
+
+```bash
+npx expo start
+```
+
+- Press `i` for iOS
+- Press `a` for Android
+- Press `w` for web (primarily used for billing pages)
+
+### 2) Start Sanity Studio
+
+```bash
+cd sanity
+npm run dev
+```
+
+Sanity Studio typically runs at `http://localhost:3333`.
+
+## Sanity: import sample data (optional)
+
+This repo includes sample datasets in `sample_data/`:
+
+- `sample_data/sample-categories.ndjson`
+- `sample_data/sample-daily-prompts.ndjson`
+- `sample_data/test-journal-entries.ndjson` (useful for AI chat testing)
+
+Import into your dataset (example uses `production`):
+
+```bash
+cd sanity
+npx sanity dataset import ../sample_data/sample-categories.ndjson production
+npx sanity dataset import ../sample_data/sample-daily-prompts.ndjson production
+npx sanity dataset import ../sample_data/test-journal-entries.ndjson production
+```
+
+## API routes (Expo)
+
+These server routes live in `app/api/`:
+
+- `POST /api/chat` (`app/api/chat+api.ts`)
+  - Streams responses using the Vercel AI SDK
+  - Uses tools to fetch journal entries from Sanity (`lib/sanity/journal.ts`)
+- `POST /api/categorize` (`app/api/categorize+api.ts`)
+  - Uses structured output (`zod` + `generateObject`) to pick/create a category
+
+## Billing / pricing (web)
+
+- Pricing page: `app/pricing.tsx`
+- Success redirect: `app/plan-changed-success.tsx`
+- Deep link scheme is configured in `app.config.ts`:
+  - `scheme: "sanityclerkbillingjournalappexpo"`
+
+## Helpful docs in this repo
+
+- AI chat testing: `help/AI-CHAT-TESTING.md`
+- Auto-categorization notes: `help/AUTO-CATEGORIZATION.md`
+- Image setup notes: `help/SETUP-IMAGES.md`, `help/IMAGE-SETUP-OFFICIAL.md`
+
+## Troubleshooting
+
+- **Metro cache issues**:
+
+```bash
+npx expo start -c
+```
+
+- **Sanity Studio env errors**: ensure `SANITY_STUDIO_SANITY_PROJECT_ID` and `SANITY_STUDIO_SANITY_DATASET` are set in `sanity/.env.local`.
+- **OpenAI errors**: ensure `OPENAI_API_KEY` is present in the root `.env` (used by API routes).
