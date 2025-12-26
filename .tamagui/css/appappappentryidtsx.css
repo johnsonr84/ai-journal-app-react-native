@@ -1,0 +1,10 @@
+:root ._dsp-flex{display:flex;}
+:root ._items-stretch{align-items:stretch;}
+:root ._fb-auto{flex-basis:auto;}
+:root ._bxs-border-box{box-sizing:border-box;}
+:root ._pos-relative{position:relative;}
+:root ._minH-0px{min-height:0px;}
+:root ._minW-0px{min-width:0px;}
+:root ._shrink-0{flex-shrink:0;}
+:root ._fd-row{flex-direction:row;}
+:root ._gap-t-space-2{gap:var(--t-space-2);}

@@ -1,0 +1,12 @@
+:root ._ff-f-family{font-family:var(--f-family);}
+:root ._dsp-inline{display:inline;}
+:root ._bxs-border-box{box-sizing:border-box;}
+:root ._ww-break-word{word-wrap:break-word;}
+:root ._ws-pre-wrap{white-space:pre-wrap;}
+:root ._mt-0px{margin-top:0px;}
+:root ._mr-0px{margin-right:0px;}
+:root ._mb-0px{margin-bottom:0px;}
+:root ._ml-0px{margin-left:0px;}
+:root ._col-color{color:var(--color);}
+:root ._fs-f-size-7{font-size:var(--f-size-7);}
+:root ._fw-700{font-weight:700;}
