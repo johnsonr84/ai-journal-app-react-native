@@ -15,8 +15,6 @@ AI-powered journaling app built with **Expo (React Native)**, **Sanity CMS**, **
 - **Mobile-first**: iOS/Android is the primary experience.
 - **Web is used for billing**: subscription management via Clerk’s web components (e.g. `/pricing`, `/plan-changed-success`).
 
-> Built while following a tutorial, then customized for this repo. This README reflects **this codebase**, not the tutorial template.
-
 ## Features
 
 - **Journal entries**: title (optional), mood tracking, rich content, image attachments.
