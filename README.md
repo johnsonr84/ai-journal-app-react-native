@@ -36,7 +36,7 @@ AI-powered journaling app built with **Expo (React Native)**, **Sanity CMS**, **
 
 | Pricing (web) |
 | --- |
-| ![Pricing screen](docs/screenshots/pricing.png) |
+| ![Pricing screen](docs/screenshots/subscription.png) |
 
 ## Repo structure
 
