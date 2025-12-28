@@ -22,7 +22,9 @@ export default {
       predictiveBackGestureEnabled: false,
     },
     web: {
-      output: "server",
+      // For Vercel hosting: generate a static web build (SPA).
+      // Web is used mainly for billing/subscription pages in this project.
+      output: "static",
       favicon: "./assets/images/favicon.png",
     },
     plugins: [
