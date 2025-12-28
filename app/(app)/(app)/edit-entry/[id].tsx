@@ -16,6 +16,13 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+// Expo Router static export (web.output = "static") needs to know which
+// dynamic routes to pre-render. Returning an empty list prevents attempting
+// to pre-render every possible entry id during `expo export`.
+export async function generateStaticParams() {
+  return [] as { id: string }[];
+}
+
 export default function EditEntryScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [entry, setEntry] = useState<JOURNAL_ENTRY_BY_ID_QUERYResult>(null);

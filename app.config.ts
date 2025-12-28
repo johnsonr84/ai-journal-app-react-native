@@ -22,9 +22,9 @@ export default {
       predictiveBackGestureEnabled: false,
     },
     web: {
-      // For Vercel hosting: generate a static web build (SPA).
+      // For Vercel hosting: generate a single-page web build (SPA).
       // Web is used mainly for billing/subscription pages in this project.
-      output: "static",
+      output: "single",
       favicon: "./assets/images/favicon.png",
     },
     plugins: [
@@ -44,7 +44,8 @@ export default {
     ],
     experiments: {
       typedRoutes: true,
-      reactCompiler: true,
+      // Disabled to reduce memory usage during `expo export` (CI/Vercel builds).
+      reactCompiler: false,
     },
   },
 };
