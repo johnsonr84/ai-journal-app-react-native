@@ -1,7 +1,7 @@
 export default {
   expo: {
     name: "Innerloop",
-    slug: "innerloop-ai-journal-app-react-native",
+    slug: "ai-journal-app-react-native",
     version: "1.0.0",
 
     runtimeVersion: { policy: "sdkVersion" },
