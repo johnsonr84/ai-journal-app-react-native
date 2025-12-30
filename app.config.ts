@@ -23,6 +23,9 @@ export default {
     },
 
     android: {
+      // ✅ Required for Android builds triggered by GitHub integration
+      package: "com.johnsonr84.innerloop",
+
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",
         foregroundImage: "./assets/images/android-icon-foreground.png",
