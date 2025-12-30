@@ -9,6 +9,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import Constants from "expo-constants";
 import { Slot } from "expo-router";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -18,12 +19,23 @@ export const unstable_settings = {
   anchor: "(tabs)",
 };
 
+const clerkPublishableKey =
+  process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ??
+  (Constants.expoConfig?.extra as any)?.clerkPublishableKey ??
+  (Constants.manifest as any)?.extra?.clerkPublishableKey;
+
+if (!clerkPublishableKey) {
+  throw new Error(
+    "Missing Clerk publishable key. Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in EAS env vars (preview) and map it into app.config.ts extra.clerkPublishableKey."
+  );
+}
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <SafeAreaProvider>
-      <ClerkProvider tokenCache={tokenCache}>
+      <ClerkProvider tokenCache={tokenCache} publishableKey={clerkPublishableKey}>
         <TamaguiProvider config={tamaguiConfig}>
           <PortalProvider shouldAddRootHost>
             <ModalProvider>
