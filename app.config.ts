@@ -18,6 +18,9 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.johnsonr84.innerloop",
+      infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
+      },
     },
 
     android: {
@@ -58,8 +61,9 @@ export default {
 
     extra: {
       eas: {
-        projectId: "d5e33202-1ecb-442f-a719-4885485dcf11",
+        projectId: "d5e33202-1ecb-442f-a719-4885485dcf11"
       },
+      clerkPublishableKey: process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
     },
   },
 };
