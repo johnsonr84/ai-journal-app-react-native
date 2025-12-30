@@ -1,16 +1,27 @@
 export default {
   expo: {
-    name: "sanity-clerk-billing-journal-app-expo",
-    slug: "sanity-clerk-billing-journal-app-expo",
+    name: "ai-journal-app-react-native",
+    slug: "ai-journal-app-react-native",
     version: "1.0.0",
+
+    // Recommended for EAS Updates stability
+    runtimeVersion: { policy: "sdkVersion" },
+
+    // ✅ Required for EAS Updates (manual because you're using dynamic config)
+    updates: {
+      url: "https://u.expo.dev/d5e33202-1ecb-442f-a719-4885485dcf11",
+    },
+
     orientation: "portrait",
     icon: "./assets/images/icon.png",
-    scheme: "sanityclerkbillingjournalappexpo",
+    scheme: "aijournalappreactnative",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
+
     ios: {
       supportsTablet: true,
     },
+
     android: {
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",
@@ -21,12 +32,14 @@ export default {
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
     },
+
     web: {
       // For Vercel hosting: generate a single-page web build (SPA).
       // Web is used mainly for billing/subscription pages in this project.
       output: "single",
       favicon: "./assets/images/favicon.png",
     },
+
     plugins: [
       "expo-router",
       [
@@ -42,10 +55,18 @@ export default {
         },
       ],
     ],
+
     experiments: {
       typedRoutes: true,
       // Disabled to reduce memory usage during `expo export` (CI/Vercel builds).
       reactCompiler: false,
+    },
+
+    // ✅ Required to link your project to EAS
+    extra: {
+      eas: {
+        projectId: "d5e33202-1ecb-442f-a719-4885485dcf11",
+      },
     },
   },
 };
