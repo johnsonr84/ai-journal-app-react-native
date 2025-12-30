@@ -16,11 +16,11 @@
     "sanity"
   ],
   "dependencies": {
-    "@portabletext/react-native": "^2.6.2",
     "@sanity/icons": "^3.7.4",
-    "@sanity/vision": "^5.1.0",
-    "react": "^19.1",
-    "react-dom": "^19.1",
+    "@sanity/vision": "^4.10.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sanity": "^4.10.2",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
@@ -28,7 +28,6 @@
     "@types/react": "^19.1",
     "eslint": "^9.28",
     "prettier": "^3.5",
-    "sanity": "^5.1.0",
     "typescript": "^5.8"
   },
   "prettier": {
