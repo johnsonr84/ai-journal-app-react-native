@@ -95,7 +95,7 @@ export default function Page() {
               opacity={0.7}
               style={{ textAlign: "center" }}
             >
-              Sign in to Journal.ai to continue
+              Sign in to Innerloop to continue
             </Paragraph>
           </YStack>
 

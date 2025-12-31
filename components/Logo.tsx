@@ -1,4 +1,4 @@
-import { Feather } from "@tamagui/lucide-icons";
+import { BrainCircuit } from "@tamagui/lucide-icons";
 import React from "react";
 
 import { Text, XStack, YStack } from "tamagui";
@@ -15,11 +15,11 @@ export default function Logo({ hasText = false }: { hasText?: boolean }) {
           borderRadius: 16,
         }}
       >
-        <Feather size={32} color="white" />
+        <BrainCircuit size={32} color="white" />
       </XStack>
       {hasText && (
         <Text fontSize="$7" fontWeight="700" color="$color">
-          Journal.ai
+          Innerloop
         </Text>
       )}
     </YStack>

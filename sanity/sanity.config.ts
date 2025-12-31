@@ -12,7 +12,7 @@ if (!process.env.SANITY_STUDIO_SANITY_DATASET) {
 
 export default defineConfig({
   name: 'default',
-  title: 'Journal.ai',
+  title: 'Innerloop',
 
   projectId: process.env.SANITY_STUDIO_SANITY_PROJECT_ID,
   dataset: process.env.SANITY_STUDIO_SANITY_DATASET,
