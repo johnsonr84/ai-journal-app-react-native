@@ -1,6 +1,8 @@
+import "@/polyfills";
+import "react-native-reanimated";
+
 import { ModalProvider } from "@/contexts/ModalContext";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import "@/polyfills";
 import { tamaguiConfig } from "@/tamagui.config";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
@@ -11,22 +13,30 @@ import {
 } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { Slot } from "expo-router";
-import "react-native-reanimated";
+import * as WebBrowser from "expo-web-browser";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PortalProvider, TamaguiProvider } from "tamagui";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
+/**
+ * Resolve Clerk publishable key from:
+ * 1) EAS env var (preferred)
+ * 2) app.config.ts -> extra.clerkPublishableKey
+ */
 const clerkPublishableKey =
   process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ??
-  (Constants.expoConfig?.extra as any)?.clerkPublishableKey ??
-  (Constants.manifest as any)?.extra?.clerkPublishableKey;
+  (Constants.expoConfig?.extra as any)?.clerkPublishableKey;
 
 if (!clerkPublishableKey) {
   throw new Error(
-    "Missing Clerk publishable key. Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in EAS env vars (preview) and map it into app.config.ts extra.clerkPublishableKey."
+    "Missing Clerk publishable key. " +
+    "Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in EAS (Preview) " +
+    "and map it into app.config.ts -> extra.clerkPublishableKey."
   );
 }
 
@@ -35,7 +45,10 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ClerkProvider tokenCache={tokenCache} publishableKey={clerkPublishableKey}>
+      <ClerkProvider
+        publishableKey={clerkPublishableKey}
+        tokenCache={tokenCache}
+      >
         <TamaguiProvider config={tamaguiConfig}>
           <PortalProvider shouldAddRootHost>
             <ModalProvider>
