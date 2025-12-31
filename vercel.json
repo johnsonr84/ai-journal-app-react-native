@@ -1,0 +1,7 @@
+{
+  "buildCommand": "TAMAGUI_DISABLE=1 NODE_OPTIONS=--max-old-space-size=8192 npx expo export -p web",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
