@@ -1,11 +1,11 @@
-import { useAuth } from "@clerk/clerk-expo";
-import { Stack } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { Spinner } from "tamagui";
+import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
+import { Redirect, Stack } from "expo-router";
 
 export default function Layout() {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded } = useAuth();
 
   if (!isLoaded) {
     return (
@@ -16,22 +16,26 @@ export default function Layout() {
   }
 
   return (
-    <Stack>
-      <Stack.Protected guard={isSignedIn}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="new-entry" options={{ headerShown: false }} />
-        <Stack.Screen name="edit-entry/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="entry/[id]" options={{ headerShown: false }} />
-      </Stack.Protected>
+    <>
+      <SignedIn>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="new-entry" />
+          <Stack.Screen name="edit-entry/[id]" />
+          <Stack.Screen name="entry/[id]" />
+          <Stack.Screen name="alert-modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </SignedIn>
 
-      <Stack.Protected guard={!isSignedIn}>
-        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="alert-modal"
-          options={{ headerShown: false, presentation: "modal" }}
-        />
-      </Stack.Protected>
-    </Stack>
+      <SignedOut>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="sign-in" />
+          <Stack.Screen name="sign-up" />
+        </Stack>
+
+        {/* Hard redirect if they end up anywhere else */}
+        <Redirect href="/(app)/sign-in" />
+      </SignedOut>
+    </>
   );
 }

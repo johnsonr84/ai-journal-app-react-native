@@ -98,6 +98,22 @@ export type Category = {
   color?: string
 }
 
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch'
   background?: string
@@ -124,20 +140,15 @@ export type SanityImageDimensions = {
   aspectRatio?: number
 }
 
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
+export type SanityImageMetadata = {
+  _type: 'sanity.imageMetadata'
+  location?: Geopoint
+  dimensions?: SanityImageDimensions
+  palette?: SanityImagePalette
+  lqip?: string
+  blurHash?: string
+  hasAlpha?: boolean
+  isOpaque?: boolean
 }
 
 export type SanityFileAsset = {
@@ -160,6 +171,13 @@ export type SanityFileAsset = {
   path?: string
   url?: string
   source?: SanityAssetSourceData
+}
+
+export type SanityAssetSourceData = {
+  _type: 'sanity.assetSourceData'
+  name?: string
+  id?: string
+  url?: string
 }
 
 export type SanityImageAsset = {
@@ -185,17 +203,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData
 }
 
-export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata'
-  location?: Geopoint
-  dimensions?: SanityImageDimensions
-  palette?: SanityImagePalette
-  lqip?: string
-  blurHash?: string
-  hasAlpha?: boolean
-  isOpaque?: boolean
-}
-
 export type Geopoint = {
   _type: 'geopoint'
   lat?: number
@@ -209,28 +216,21 @@ export type Slug = {
   source?: string
 }
 
-export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData'
-  name?: string
-  id?: string
-  url?: string
-}
-
 export type AllSanitySchemaTypes =
   | DailyPrompt
   | JournalEntry
   | Category
+  | SanityImageCrop
+  | SanityImageHotspot
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
-  | SanityImageHotspot
-  | SanityImageCrop
-  | SanityFileAsset
-  | SanityImageAsset
   | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
   | Geopoint
   | Slug
-  | SanityAssetSourceData
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../lib/sanity/categories.ts
 // Variable: ALL_CATEGORIES_QUERY
@@ -240,13 +240,6 @@ export type ALL_CATEGORIES_QUERYResult = Array<{
   title: string | null
   color: string | null
 }>
-// Variable: CATEGORY_BY_ID_QUERY
-// Query: *[  _type == "category"   && _id == $categoryId][0]{  _id,  title,  color}
-export type CATEGORY_BY_ID_QUERYResult = {
-  _id: string
-  title: string | null
-  color: string | null
-} | null
 
 // Source: ../lib/sanity/dailyPrompts.ts
 // Variable: ACTIVE_DAILY_PROMPTS_QUERY
@@ -416,7 +409,6 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[\n  _type == "category"\n] | order(title asc) {\n  _id,\n  title,\n  color\n}': ALL_CATEGORIES_QUERYResult
-    '*[\n  _type == "category" \n  && _id == $categoryId\n][0]{\n  _id,\n  title,\n  color\n}': CATEGORY_BY_ID_QUERYResult
     '*[\n  _type == "dailyPrompt" \n  && isActive == true\n] | order(weight desc) {\n  _id,\n  title,\n  prompt,\n  emoji,\n  category->{\n    title,\n    color\n  },\n  suggestedMood,\n  isActive,\n  weight,\n  tags,\n  createdAt\n}': ACTIVE_DAILY_PROMPTS_QUERYResult
     '*[\n  _type == "journalEntry" \n  && userId == $userId\n] | order(createdAt desc) {\n  _id,\n  title,\n  content,\n  mood,\n  createdAt,\n  aiGeneratedCategory->{\n    title,\n    color\n  }\n}': USER_JOURNAL_ENTRIES_QUERYResult
     '*[\n  _type == "journalEntry" \n  && _id == $entryId\n][0]{\n  _id,\n  title,\n  content,\n  mood,\n  createdAt,\n  userId,\n  aiGeneratedCategory->{\n    title,\n    color\n  }\n}': JOURNAL_ENTRY_BY_ID_QUERYResult
