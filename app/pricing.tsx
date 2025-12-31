@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/theme";
 import { Protect, useAuth } from "@clerk/clerk-expo";
 import { PricingTable, UserProfile } from "@clerk/clerk-expo/web";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   Platform,
@@ -13,9 +14,20 @@ import {
 
 export default function PricingWeb() {
   const { signOut } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut();
+    try {
+      await signOut();
+
+      // Clear any stacked screens/modals (safe even if none)
+      router.dismissAll();
+
+      // Your sign-in screen lives in app/(app)/sign-in.tsx
+      router.replace("/(app)/sign-in");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   const upgradeContent = (
@@ -174,6 +186,7 @@ export default function PricingWeb() {
           </Text>
         </View>
       )}
+
       {/* Pro Features Reminder */}
       <View style={styles.proFeaturesSection}>
         <Text style={styles.proFeaturesTitle}>Your Pro Benefits</Text>

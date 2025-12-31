@@ -3,7 +3,8 @@ import { IconSymbol } from "@/components/ui/icon-symbol";
 import { AppColors } from "@/constants/theme";
 import { useStreaks } from "@/hooks/use-streaks";
 import { getUserDisplayName, getUserInitials } from "@/lib/utils/user";
-import { Protect, useUser } from "@clerk/clerk-expo";
+import { Protect, useAuth, useUser } from "@clerk/clerk-expo";
+import { Redirect } from "expo-router";
 import { Image, Linking, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -21,6 +22,7 @@ import {
 
 export default function Profile() {
   const { user, isLoaded } = useUser();
+  const { isSignedIn } = useAuth(); // ✅ added
   const insets = useSafeAreaInsets();
   const { currentStreak, longestStreak } = useStreaks();
 
@@ -32,6 +34,11 @@ export default function Profile() {
         </View>
       </View>
     );
+  }
+
+  // ✅ critical: tabs screens can stay mounted, so self-redirect when signed out
+  if (!isSignedIn) {
+    return <Redirect href="/(app)/sign-in" />;
   }
 
   const initials = getUserInitials(user);
