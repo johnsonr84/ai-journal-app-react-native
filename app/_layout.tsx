@@ -1,8 +1,6 @@
-import "@/polyfills";
-import "react-native-reanimated";
-
 import { ModalProvider } from "@/contexts/ModalContext";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import "@/polyfills";
 import { tamaguiConfig } from "@/tamagui.config";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
@@ -11,44 +9,21 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import Constants from "expo-constants";
 import { Slot } from "expo-router";
-import * as WebBrowser from "expo-web-browser";
+import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PortalProvider, TamaguiProvider } from "tamagui";
-
-WebBrowser.maybeCompleteAuthSession();
 
 export const unstable_settings = {
   anchor: "(tabs)",
 };
-
-/**
- * Resolve Clerk publishable key from:
- * 1) EAS env var (preferred)
- * 2) app.config.ts -> extra.clerkPublishableKey
- */
-const clerkPublishableKey =
-  process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ??
-  (Constants.expoConfig?.extra as any)?.clerkPublishableKey;
-
-if (!clerkPublishableKey) {
-  throw new Error(
-    "Missing Clerk publishable key. " +
-    "Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in EAS (Preview) " +
-    "and map it into app.config.ts -> extra.clerkPublishableKey."
-  );
-}
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <SafeAreaProvider>
-      <ClerkProvider
-        publishableKey={clerkPublishableKey}
-        tokenCache={tokenCache}
-      >
+      <ClerkProvider tokenCache={tokenCache}>
         <TamaguiProvider config={tamaguiConfig}>
           <PortalProvider shouldAddRootHost>
             <ModalProvider>
