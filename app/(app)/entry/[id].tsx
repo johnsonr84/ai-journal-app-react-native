@@ -18,13 +18,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, XStack } from "tamagui";
 
-// Expo Router static export (web.output = "static") needs to know which
-// dynamic routes to pre-render. Returning an empty list prevents attempting
-// to pre-render every possible entry id during `expo export`.
-export async function generateStaticParams() {
-  return [] as { id: string }[];
-}
-
 export default function EntryDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { user } = useUser();
