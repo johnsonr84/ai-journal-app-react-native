@@ -9,6 +9,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import Constants from "expo-constants";
 import { Slot } from "expo-router";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -20,10 +21,25 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const publishableKey =
+    process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ??
+    Constants.expoConfig?.extra?.clerkPublishableKey;
+
+  if (!publishableKey) {
+    throw new Error(
+      "Missing Clerk publishable key. Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY (e.g. in your deployment environment variables)."
+    );
+  }
+
+  if (typeof publishableKey !== "string" || !publishableKey.startsWith("pk_")) {
+    throw new Error(
+      "Invalid Clerk publishable key. EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY must start with 'pk_'."
+    );
+  }
 
   return (
     <SafeAreaProvider>
-      <ClerkProvider tokenCache={tokenCache}>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <TamaguiProvider config={tamaguiConfig}>
           <PortalProvider shouldAddRootHost>
             <ModalProvider>
