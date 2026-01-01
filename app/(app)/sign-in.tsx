@@ -4,7 +4,7 @@ import { useModal } from "@/contexts/ModalContext";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 import { ClerkAPIResponseError } from "@clerk/types";
 import { Link, useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Button,
@@ -108,7 +108,11 @@ export default function Page() {
                   keyboardType="email-address"
                   value={emailAddress}
                   placeholder="Enter your email"
-                  onChangeText={setEmailAddress}
+                  onChangeText={(value: any) =>
+                    setEmailAddress(
+                      typeof value === "string" ? value : value?.nativeEvent?.text
+                    )
+                  }
                   borderColor="$borderColor"
                   focusStyle={{
                     borderColor: "$purple10",
@@ -122,7 +126,11 @@ export default function Page() {
                   secureTextEntry
                   value={password}
                   placeholder="Enter your password"
-                  onChangeText={setPassword}
+                  onChangeText={(value: any) =>
+                    setPassword(
+                      typeof value === "string" ? value : value?.nativeEvent?.text
+                    )
+                  }
                   borderColor="$borderColor"
                   focusStyle={{
                     borderColor: "$purple10",

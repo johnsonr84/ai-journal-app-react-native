@@ -1,7 +1,6 @@
 import { Colors } from "@/constants/theme";
 import { Protect, useAuth } from "@clerk/clerk-expo";
 import { PricingTable, UserProfile } from "@clerk/clerk-expo/web";
-import React from "react";
 import {
   Platform,
   ScrollView,

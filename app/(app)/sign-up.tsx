@@ -133,7 +133,11 @@ export default function SignUpScreen() {
                   <Input
                     value={code}
                     placeholder="Enter verification code"
-                    onChangeText={setCode}
+                    onChangeText={(value: any) =>
+                      setCode(
+                        typeof value === "string" ? value : value?.nativeEvent?.text
+                      )
+                    }
                     borderColor="$borderColor"
                     focusStyle={{
                       borderColor: "$purple10",
@@ -215,7 +219,11 @@ export default function SignUpScreen() {
                   keyboardType="email-address"
                   value={emailAddress}
                   placeholder="Enter your email"
-                  onChangeText={setEmailAddress}
+                  onChangeText={(value: any) =>
+                    setEmailAddress(
+                      typeof value === "string" ? value : value?.nativeEvent?.text
+                    )
+                  }
                   borderColor="$borderColor"
                   focusStyle={{
                     borderColor: "$purple10",
@@ -229,7 +237,11 @@ export default function SignUpScreen() {
                   secureTextEntry
                   value={password}
                   placeholder="Create a password"
-                  onChangeText={setPassword}
+                  onChangeText={(value: any) =>
+                    setPassword(
+                      typeof value === "string" ? value : value?.nativeEvent?.text
+                    )
+                  }
                   borderColor="$borderColor"
                   focusStyle={{
                     borderColor: "$purple10",
