@@ -1,7 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
-import { createCategory, fetchCategories } from "@/lib/sanity/categories";
+import { createCategory, fetchCategories } from "../../lib/sanity/categories";
 
 export async function POST(req: Request) {
   try {

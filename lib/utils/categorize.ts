@@ -1,4 +1,4 @@
-import { generateAPIUrl } from "@/utils";
+import { generateAPIUrl } from "../../utils";
 
 interface CategorizeResponse {
   categoryId: string;
