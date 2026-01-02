@@ -4,7 +4,8 @@ import { AppColors } from "@/constants/theme";
 import { useStreaks } from "@/hooks/use-streaks";
 import { getUserDisplayName, getUserInitials } from "@/lib/utils/user";
 import { Protect, useUser } from "@clerk/clerk-expo";
-import { Image, Linking, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
+import { Image, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Button,
@@ -23,6 +24,7 @@ export default function Profile() {
   const { user, isLoaded } = useUser();
   const insets = useSafeAreaInsets();
   const { currentStreak, longestStreak } = useStreaks();
+  const router = useRouter();
 
   if (!isLoaded) {
     return (
@@ -198,7 +200,7 @@ export default function Profile() {
                 pressStyle={{ opacity: 0.8 }}
                 fontWeight="600"
                 onPress={() => {
-                  Linking.openURL("http://localhost:8081/pricing");
+                  router.push("/pricing");
                 }}
               >
                 View Plans & Pricing

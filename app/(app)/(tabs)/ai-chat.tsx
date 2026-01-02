@@ -4,10 +4,10 @@ import { Protect, useUser } from "@clerk/clerk-expo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { DefaultChatTransport } from "ai";
 import { fetch as expoFetch } from "expo/fetch";
+import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
-  Linking,
   Platform,
   ScrollView,
   StyleSheet,
@@ -22,6 +22,7 @@ export default function AIChatScreen() {
   const scrollViewRef = useRef<ScrollView>(null);
   const insets = useSafeAreaInsets();
   const { user } = useUser();
+  const router = useRouter();
 
   const { messages, error, sendMessage } = useChat({
     transport: new DefaultChatTransport({
@@ -152,7 +153,7 @@ export default function AIChatScreen() {
                     fontWeight="600"
                     pressStyle={{ opacity: 0.8 }}
                     onPress={() => {
-                      Linking.openURL("http://localhost:8081/pricing");
+                      router.push("/pricing");
                     }}
                   >
                     Upgrade to Pro
