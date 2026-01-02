@@ -10,7 +10,7 @@ import { z } from "zod";
 import {
   fetchJournalEntries,
   fetchJournalEntriesWithDateRange,
-} from "../../lib/sanity/journal";
+} from "@/lib/sanity/journal";
 
 export async function POST(req: Request) {
   const { messages, userId }: { messages: UIMessage[]; userId?: string } =
