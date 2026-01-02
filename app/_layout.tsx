@@ -18,7 +18,7 @@ import { PortalProvider, TamaguiProvider } from "tamagui";
 export const unstable_settings = {
   // Root-level anchor must point to a top-level route/group under `app/`.
   // `(tabs)` is nested under `(app)`, so the valid root anchor here is `(app)`.
-  anchor: "(app)",
+  anchor: "(tabs)",
 };
 
 export default function RootLayout() {
