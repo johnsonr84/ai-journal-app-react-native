@@ -37,7 +37,10 @@ module.exports = {
     },
 
     web: {
-      output: "server",
+      // Vercel static hosting expects an `index.html` at the output root.
+      // "server" output splits export into `dist/client` + `dist/server` (no `dist/index.html`),
+      // which results in Vercel `404: NOT_FOUND` unless you do additional wiring.
+      output: "single",
       favicon: "./assets/images/favicon.png",
     },
 

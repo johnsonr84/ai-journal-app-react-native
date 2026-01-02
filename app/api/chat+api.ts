@@ -1,7 +1,3 @@
-import {
-  fetchJournalEntries,
-  fetchJournalEntriesWithDateRange,
-} from "@/lib/sanity/journal";
 import { openai } from "@ai-sdk/openai";
 import {
   convertToModelMessages,
@@ -11,6 +7,10 @@ import {
   UIMessage,
 } from "ai";
 import { z } from "zod";
+import {
+  fetchJournalEntries,
+  fetchJournalEntriesWithDateRange,
+} from "../../lib/sanity/journal";
 
 export async function POST(req: Request) {
   const { messages, userId }: { messages: UIMessage[]; userId?: string } =

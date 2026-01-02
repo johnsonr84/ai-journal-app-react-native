@@ -1,7 +1,7 @@
-import { createCategory, fetchCategories } from "@/lib/sanity/categories";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
+import { createCategory, fetchCategories } from "../../lib/sanity/categories";
 
 export async function POST(req: Request) {
   try {
@@ -70,8 +70,8 @@ ${entryText}
 
 EXISTING CATEGORIES:
 ${existingCategories
-  .map((c) => `- ${c.title} (ID: ${c._id}) [Color: ${c.color || "none"}]`)
-  .join("\n")}
+          .map((c) => `- ${c.title} (ID: ${c._id}) [Color: ${c.color || "none"}]`)
+          .join("\n")}
 
 INSTRUCTIONS:
 1. First, carefully review the existing categories to see if any are a good match for this entry
@@ -147,8 +147,7 @@ IMPORTANT: Prefer using existing categories to maintain consistency and avoid ca
   } catch (error) {
     console.error("Error in categorization:", error);
     return new Response(
-      `Failed to categorize entry: ${
-        error instanceof Error ? error.message : "Unknown error"
+      `Failed to categorize entry: ${error instanceof Error ? error.message : "Unknown error"
       }`,
       { status: 500 }
     );
