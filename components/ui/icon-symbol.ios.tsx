@@ -1,18 +1,5 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols'
-import { ComponentProps } from 'react'
-import { StyleProp, ViewStyle } from 'react-native'
-
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>
-
-// Fallback mapping when SymbolView isn't available (e.g. unsupported runtime).
-const MAPPING = {
-  'house.fill': 'home',
-  'book.fill': 'menu-book',
-  'heart.fill': 'favorite',
-  'person.fill': 'person',
-  plus: 'add',
-} as IconMapping
+import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export function IconSymbol({
   name,
@@ -27,19 +14,6 @@ export function IconSymbol({
   style?: StyleProp<ViewStyle>;
   weight?: SymbolWeight;
 }) {
-  // If SymbolView isn't available, fall back to Material icons to avoid a hard crash.
-  if (typeof SymbolView !== 'function') {
-    const mapped = MAPPING[name] ?? 'help-outline'
-    return (
-      <MaterialIcons
-        name={mapped}
-        size={size}
-        color={color}
-        style={style as StyleProp<any>}
-      />
-    )
-  }
-
   return (
     <SymbolView
       weight={weight}
