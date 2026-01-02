@@ -16,7 +16,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PortalProvider, TamaguiProvider } from "tamagui";
 
 export const unstable_settings = {
-  anchor: "(tabs)",
+  // Root-level anchor must point to a top-level route/group under `app/`.
+  // `(tabs)` is nested under `(app)`, so the valid root anchor here is `(app)`.
+  anchor: "(app)",
 };
 
 export default function RootLayout() {
