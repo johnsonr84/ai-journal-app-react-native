@@ -1,12 +1,36 @@
-import { useClerk } from "@clerk/clerk-expo";
-import { Alert, Text } from "react-native";
-import { Button } from "tamagui";
+import { useAuth } from "@clerk/clerk-expo";
+import { useRouter } from "expo-router";
+import { Alert, Platform } from "react-native";
+import { Button, Text } from "tamagui";
 
 export const SignOutButton = () => {
-  // Use `useClerk()` to access the `signOut()` function
-  const { signOut } = useClerk();
+  const { signOut } = useAuth();
+  const router = useRouter();
+
+  const doSignOut = async () => {
+    try {
+      await signOut();
+      // Groups like (app) are not part of the URL; this is /sign-in
+      router.replace("/sign-in");
+    } catch (err) {
+      console.error("Sign out failed", err);
+    }
+  };
+
   const handleSignOut = async () => {
-    // Are you sure you want to sign out?
+    // On web, React Native Alert may not support multi-button callbacks reliably.
+    if (Platform.OS === "web") {
+      const ok =
+        typeof window !== "undefined"
+          ? window.confirm("Are you sure you want to sign out?")
+          : true;
+      if (ok) {
+        await doSignOut();
+      }
+      return;
+    }
+
+    // Native confirm dialog
     Alert.alert(
       "Are you sure you want to sign out?",
       "This will sign you out of your account and you will need to sign in again.",
@@ -15,17 +39,16 @@ export const SignOutButton = () => {
         {
           text: "Sign out",
           style: "destructive",
-          onPress: async () => {
-            await signOut();
-            // Redirect to the sign-in page happens automatically with the Protected Route
-          },
+          onPress: doSignOut,
         },
       ]
     );
   };
   return (
     <Button theme="red" borderColor="$borderColor" onPress={handleSignOut}>
-      <Text>Sign out</Text>
+      <Text color="white" fontWeight="600">
+        Sign out
+      </Text>
     </Button>
   );
 };
